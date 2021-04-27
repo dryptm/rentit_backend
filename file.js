@@ -14,7 +14,7 @@ var arr = [];
   });
 
 
- 
+
   var l;
   var link, data_code, data, square_ft, sq, vr, chk, c, b, d, price, dat;
 
@@ -53,7 +53,48 @@ var arr = [];
     console.log(arr);
 
     l = document.querySelectorAll(".SRCard").length;
-  
+
+
+    // var bhk = document.querySelector(".m-srp-card__title__bhk").innerText;
+    // var location = document.querySelector(".m-srp-card__title").innerText;
+
+
+
+    // var c = document.querySelector(".m-srp-card__price").innerText;
+    // var res = c.split("           ");
+    // var str1 = res[5].split("");
+    // var arr = [];
+    // for (var i = 0; i < str1.length; i++) {
+    //   if (str1[i] !== "\t" && str1[i] !== " " && str1[i] !== "\n") {
+    //     arr.push(str1[i]);
+    //   }
+    // }
+    // var price = [];
+    // for (var i = 0; i < arr.length; i++) {
+    //   if (arr[i] !== ",") {
+    //     price.push(arr[i]);
+    //   }
+    // }
+    // price = Number(price.join(''))
+
+
+
+
+
+    // var sqrt = document.querySelector("#propertyArea52465999").value
+    // var sqrt_split = sqrt.split('')
+    // var arr_sqrt = []
+    // for (var i = 0; i < sqrt_split.length; i++) {
+    //   if (sqrt_split[i] !== "s" && sqrt_split[i] !== "q" && sqrt_split[i] !== "f" && sqrt_split[i] !== "t" && sqrt_split[i] !== " ") {
+    //     arr_sqrt.push(sqrt_split[i])
+    //   }
+    // }
+    // sqrt = Number(arr_sqrt.join(''))
+
+
+
+
+
 
     for (var i = 0; i < l; i++) {
       c = document.querySelectorAll(".SRCard")[i].innerText; //innertext
@@ -110,5 +151,3 @@ var arr = [];
 
   //  await browser.close();
 })();
-
-
