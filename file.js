@@ -1,3 +1,9 @@
+var express = require("express");
+var app = express();
+
+
+
+
 const puppeteer = require('puppeteer');
 
 (async () => {
@@ -11,11 +17,6 @@ const puppeteer = require('puppeteer');
     width: 0,
     height: 0
   });
-
-
-
-  var l;
-  var link, data_code, data, square_ft, sq, vr, chk, c, b, d, price, dat;
 
 
 
@@ -41,22 +42,29 @@ const puppeteer = require('puppeteer');
     waitUntil: 'networkidle0',
   });
 
-
+  console.log
 
   var page_prop = await page.evaluate(() => {
 
     var numberofblocks = document.querySelectorAll(".m-srp-card").length;
     var property_details = [];
 
-    for (var i = 0; i < numberofblocks; i++) {
-      
-      //url
-      var pic_url=document.querySelectorAll(".m-photo__img")[i].src;
+    for (let i = 0; i < numberofblocks; i++) {
+
+      //url....................................
+      // var pic_url;
+      // if (document.querySelectorAll(".m-photo__img")[i]==undefined) {
+      //   pic_url = "";
+      //   return;
+      // }
+      // else{
+      //   pic_url = document.querySelectorAll(".m-photo__img")[i].src;
+      // }
 
 
-      
-      
-      // bhk
+
+
+      // bhk..................................
       var bhk = document.querySelectorAll(".m-srp-card__title__bhk")[i].innerText;
       var arr_bhk = bhk.split("");
       var arr1_bhk = arr_bhk[0];
@@ -71,7 +79,7 @@ const puppeteer = require('puppeteer');
 
 
       //price..............................
-      var c = document.querySelectorAll(".m-srp-card__price")[i].innerHTML;
+      var c = document.querySelectorAll(".m-srp-card__price")[(i * 2) + 1].innerHTML;
       var res = c.split("           ");
       var str1 = res[5].split("");
       var arr = [];
@@ -91,34 +99,42 @@ const puppeteer = require('puppeteer');
 
 
       //sqrt................................
-      var sqrt = document.querySelectorAll(".m-srp-card__title")[i].innerText;
+      var sqft = document.querySelectorAll(".m-srp-card__title")[i].innerText;
 
 
-      sqrt = Number(sqrt.split(" ")[(sqrt.split(" ").length) - 2])
+      sqft = Number(sqft.split(" ")[(sqft.split(" ").length) - 2])
 
 
 
 
       var object_property = {
-        "picture":pic_url,
         "bhk": bhk,
         "location": location_prop,
         "price": price,
-        "sqrt": sqrt
+        "sqft": sqft
       };
+      if (document.querySelectorAll(".m-photo__fig")[i].firstElementChild && document.querySelectorAll(".m-photo__fig")[i].firstElementChild.dataset.src) {
+        object_property.picture = document.querySelectorAll(".m-photo__fig")[i].firstElementChild.dataset.src;
+      }
 
       property_details.push(object_property);
     }
+
     return property_details;
 
-
   })
-
+  var myJsonproperty = JSON.stringify(page_prop);
   console.log(page_prop);
-
-
-
-
-
-  //  await browser.close();
+  await browser.close();
+  app.get("/", (req, res) => {
+    res.send(myJsonproperty)
+  })
 })();
+
+
+
+
+
+app.listen(process.env.PORT || 3000, function () {
+  console.log("server started at 3000");
+});
