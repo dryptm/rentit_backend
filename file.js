@@ -16,10 +16,9 @@ const puppeteer = require('puppeteer');
 
   var l;
   var link, data_code, data, square_ft, sq, vr, chk, c, b, d, price, dat;
-  
-  
-  
-  // var properties=[];
+
+
+
 
 
 
@@ -37,27 +36,26 @@ const puppeteer = require('puppeteer');
 
 
 
-
-  //later change delay
-  //---------------------------
-  function delay(time) {
-    return new Promise(function (resolve) {
-      setTimeout(resolve, time)
-    });
-  }
-  await delay(4000);
-  //-------------------------------------
+  // full page load wait
+  await page.waitForNavigation({
+    waitUntil: 'networkidle0',
+  });
 
 
 
-
-
-  await page.evaluate(() => {
+  var page_prop = await page.evaluate(() => {
 
     var numberofblocks = document.querySelectorAll(".m-srp-card").length;
-
+    var property_details = [];
 
     for (var i = 0; i < numberofblocks; i++) {
+      
+      //url
+      var pic_url=document.querySelectorAll(".m-photo__img")[i].src;
+
+
+      
+      
       // bhk
       var bhk = document.querySelectorAll(".m-srp-card__title__bhk")[i].innerText;
       var arr_bhk = bhk.split("");
@@ -102,19 +100,21 @@ const puppeteer = require('puppeteer');
 
 
       var object_property = {
+        "picture":pic_url,
         "bhk": bhk,
         "location": location_prop,
         "price": price,
         "sqrt": sqrt
       };
-      // properties.push(object_property);
-      alert(object_property.location)
+
+      property_details.push(object_property);
     }
+    return property_details;
 
 
   })
 
-
+  console.log(page_prop);
 
 
 
