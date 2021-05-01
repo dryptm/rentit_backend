@@ -51,15 +51,11 @@ const puppeteer = require('puppeteer');
 
     for (let i = 0; i < numberofblocks; i++) {
 
-      //url....................................
-      // var pic_url;
-      // if (document.querySelectorAll(".m-photo__img")[i]==undefined) {
-      //   pic_url = "";
-      //   return;
-      // }
-      // else{
-      //   pic_url = document.querySelectorAll(".m-photo__img")[i].src;
-      // }
+      //redirect_url....................................
+      var redirect_url = document.querySelectorAll(".SRCard")[i].dataset.code;
+      var arr_urlx = redirect_url.split(',')
+      var arr_urly = arr_urlx[1].split("'")
+      redirect_url = arr_urly[1];
 
 
 
@@ -108,6 +104,8 @@ const puppeteer = require('puppeteer');
 
 
       var object_property = {
+
+        "redirect_url": redirect_url,
         "bhk": bhk,
         "location": location_prop,
         "price": price,
@@ -119,15 +117,16 @@ const puppeteer = require('puppeteer');
 
       property_details.push(object_property);
     }
-
+    
     return property_details;
 
   })
-  var myJsonproperty = JSON.stringify(page_prop);
+  
+
   console.log(page_prop);
   await browser.close();
   app.get("/", (req, res) => {
-    res.send(myJsonproperty)
+    res.send(page_prop)
   })
 })();
 
