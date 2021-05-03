@@ -25,17 +25,17 @@ const puppeteer = require('puppeteer');
   const search_string = "lucknow rent 3bhk"
 
   console.log("-x-x-x-x- start -x-x-x-x-x-x-")
-  await page.goto("https://www.google.com/search?q=" + search_string);
-  console.log("x-x-x-x-x- next -x-x-x-x-x")
-  await page.evaluate(() => {
-    document.querySelector('.DKV0Md').click()
+  await page.goto("https://www.magicbricks.com/3-bhk-flats-for-rent-in-new-delhi-pppfr");
+  // console.log("x-x-x-x-x- next -x-x-x-x-x")
+  // await page.evaluate(() => {
+  //   document.querySelector('.DKV0Md').click()
 
-  })
+  // })
   // full page load wait
-  await page.waitForNavigation({
-    waitUntil: 'networkidle0',
-  });
-
+  // await page.waitForNavigation({
+  //   waitUntil: 'networkidle0',
+  // });
+  
   var page_prop = await page.evaluate(() => {
 
     var numberofblocks = document.querySelectorAll(".m-srp-card").length;
@@ -44,10 +44,19 @@ const puppeteer = require('puppeteer');
     for (let i = 0; i < numberofblocks; i++) {
 
       //redirect_url....................................
-      var redirect_url = document.querySelectorAll(".SRCard")[i].dataset.code;
+      
+      if(document.querySelectorAll(".SRCard")[i]&&document.querySelectorAll(".SRCard")[i].dataset.code){
+        var redirect_url = document.querySelectorAll(".SRCard")[i].dataset.code;
       var arr_urlx = redirect_url.split(',')
       var arr_urly = arr_urlx[1].split("'")
       redirect_url = arr_urly[1];
+      }
+      else{
+        var redirect_url="does not exist"
+      }
+      
+      
+      
 
 
 
@@ -122,6 +131,8 @@ const puppeteer = require('puppeteer');
         "price": price,
         "size": size
       };
+
+      //picture.....................................
       if (document.querySelectorAll(".m-photo__fig")[i].firstElementChild && document.querySelectorAll(".m-photo__fig")[i].firstElementChild.dataset.src) {
         object_property.picture = document.querySelectorAll(".m-photo__fig")[i].firstElementChild.dataset.src;
       }
@@ -149,16 +160,16 @@ const puppeteer = require('puppeteer');
   const search_string1 = "lucknow rent 4bhk"
 
   console.log("-x-x-x-x- start1 -x-x-x-x-x-x-")
-  await page1.goto("https://www.google.com/search?q=" + search_string1);
-  console.log("x-x-x-x-x- next1 -x-x-x-x-x")
-  await page1.evaluate(() => {
-    document.querySelector('.DKV0Md').click()
+  await page1.goto("https://www.magicbricks.com/4-bhk-flats-for-rent-in-lucknow-pppfr");
+  // console.log("x-x-x-x-x- next1 -x-x-x-x-x")
+  // await page1.evaluate(() => {
+  //   document.querySelector('.DKV0Md').click()
 
-  })
-  // full page load wait
-  await page1.waitForNavigation({
-    waitUntil: 'networkidle0',
-  });
+  // })
+  // // full page load wait
+  // await page1.waitForNavigation({
+  //   waitUntil: 'networkidle0',
+  // });
 
   var page_prop1 = await page1.evaluate(() => {
 
@@ -272,16 +283,16 @@ const puppeteer = require('puppeteer');
   const search_string2 = "lucknow rent 5bhk"
 
   console.log("-x-x-x-x- start1 -x-x-x-x-x-x-")
-  await page2.goto("https://www.google.com/search?q=" + search_string2);
-  console.log("x-x-x-x-x- next1 -x-x-x-x-x")
-  await page2.evaluate(() => {
-    document.querySelector('.DKV0Md').click()
+  await page2.goto("https://www.magicbricks.com/5-bhk-flats-for-rent-in-faizabad-pppfr");
+  // console.log("x-x-x-x-x- next1 -x-x-x-x-x")
+  // await page2.evaluate(() => {
+  //   document.querySelector('.DKV0Md').click()
 
-  })
-  // full page load wait
-  await page2.waitForNavigation({
-    waitUntil: 'networkidle0',
-  });
+  // })
+  // // full page load wait
+  // await page2.waitForNavigation({
+  //   waitUntil: 'networkidle0',
+  // });
 
   var page_prop2 = await page2.evaluate(() => {
 
@@ -394,7 +405,7 @@ const puppeteer = require('puppeteer');
   console.log(n2 - n1)
 
 
-  await browser.close();
+  // await browser.close();
   app.get("/", (req, res) => {
     res.send(page_prop.concat(page_prop1))
   })
