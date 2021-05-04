@@ -7,6 +7,7 @@ var app = express();
 const puppeteer = require('puppeteer');
 let prop_details = [];
 let prpcnt = 0;
+
 (async () => {
   var d = new Date();
   var n1 = d.getSeconds();
@@ -24,8 +25,8 @@ let prpcnt = 0;
 
 
 
-  let bhk_count = [1, 1, 1, 1, 1, 1];
-  let place = "gautam budh nagar";
+  let bhk_count = [0, 1, 1, 1, 0, 0];
+  let place = "chandigarh";
   let url_count = 0;
   let place1 = "";
 
@@ -33,7 +34,10 @@ let prpcnt = 0;
 
   if (w.length > 1) {
     for (let x = 0; x < bhk_count.length; x++) {
-      if (bhk_count[x] == 1) {
+      if (bhk_count[x] == 0) {
+        x++;
+        prop_details[x] = [];
+      } else if (bhk_count[x] == 1) {
         const page = await browser.newPage();
         page.setViewport({
           width: 0,
@@ -279,7 +283,10 @@ let prpcnt = 0;
     }
   } else {
     for (let x = 0; x < bhk_count.length; x++) {
-      if (bhk_count[x] == 1) {
+      if (bhk_count[x] == 0) {
+        x++;
+        prop_details[x] = [];
+      } else if (bhk_count[x] == 1) {
         const page = await browser.newPage();
         page.setViewport({
           width: 0,
@@ -414,6 +421,7 @@ let prpcnt = 0;
   app.get("/", (req, res) => {
     res.send(prop_details)
   })
+
 })();
 
 
