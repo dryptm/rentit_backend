@@ -431,3 +431,97 @@ let prpcnt = 0;
 app.listen(process.env.PORT || 3000, function () {
   console.log("server started at 3000");
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 99acres
+// https://www.99acres.com/2-bhk-flats-for-rent-in-bangalore-ffid
+
+// --------------------number of elements----------------------------
+// let a=document.querySelectorAll(".srpTuple__tupleDetails ").length;
+
+
+// -------------picture---------------
+// let pic_url=document.querySelectorAll(".srpTuple__tupleDetails ")[0].firstElementChild.firstElementChild.firstElementChild.lastElementChild.attributes[0].value;
+
+
+// ---------location------------
+// let location=document.querySelectorAll(".srpTuple__tupleTable")[0].firstElementChild.firstElementChild.innerText;
+
+// ---------price----------------
+// let p=[];
+// for(let i=0;i<document.querySelectorAll(".srpTuple__tupleDetails ").length;i++){
+// let c=document.querySelectorAll(".srpTuple__spacer16 ")[i*3].innerText
+
+// var price = [];
+
+//               if (c.length > 10) {
+//                 var res = c.split(" ");
+//                 var str1 = res[1].split("");
+//                 var arr = [];
+//                 for (var j = 0; j < str1.length; j++) {
+//                   if (str1[j] !== "\t" && str1[j] !== " " && str1[j] !== "\n") {
+//                     arr.push(str1[j]);
+//                   }
+//                 }
+//                 var lack_check = arr[(arr.length) - 3] + arr[(arr.length) - 2] + arr[(arr.length) - 1]
+
+//                 if (lack_check === "Lac") {
+//                   for (var j = 0; j < ((arr.length) - 3); j++) {
+//                     price.push(arr[j]);
+//                   }
+//                   price = (Number(price.join('')) * 100000);
+//                 } else {
+//                   for (var j = 0; j < arr.length; j++) {
+//                     if (arr[j] !== ",") {
+//                       price.push(arr[j]);
+//                     }
+//                   }
+//                   price = Number(price.join(''));
+//                 }
+//               } else {
+//                 price = "Call for price";
+//               }
+// p.push(price)
+// }
+
+
+
+
+
+// -------------size--------------------
+// let p=[];
+// for(let i=0;i<document.querySelectorAll(".srpTuple__tupleDetails ").length;i++){
+// let size=document.querySelectorAll(".srpTuple__spacer16 ")[(i*3)+1].innerText;
+// size=size.split(" ")[0]+size.split(" ")[1];
+// p.push(size)
+
+// }
+
+
+
+
+// ---------------bhk--------------------
+// let p=[];
+// for(let i=0;i<document.querySelectorAll(".srpTuple__tupleDetails ").length;i++){
+// let bhk=document.querySelectorAll(".srpTuple__spacer16 ")[(i*3)+2].innerText
+// bhk=Number(bhk.split(" ")[0])
+// p.push(bhk)
+// }
