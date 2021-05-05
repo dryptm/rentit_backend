@@ -417,7 +417,7 @@ let prpcnt = 0;
   }
 
 
-  await browser.close();
+  // await browser.close();
   app.get("/", (req, res) => {
     res.send(prop_details)
   })
@@ -453,6 +453,18 @@ app.listen(process.env.PORT || 3000, function () {
 
 // 99acres
 // https://www.99acres.com/2-bhk-flats-for-rent-in-bangalore-ffid
+
+
+
+// --------------------property_url-----------------------------
+// let p=[];
+// for(let i=0;i<document.querySelectorAll(".srp").length;i++){
+// let x=document.querySelectorAll(".srp")[i].outerHTML.split(" ")[4].split('"')[1];
+// let url_99acres="https://www.99acres.com/"+x;
+// p.push(url_99acres);
+// }
+
+
 
 // --------------------number of elements----------------------------
 // let a=document.querySelectorAll(".srpTuple__tupleDetails ").length;
