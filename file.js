@@ -26,16 +26,18 @@ let prpcnt = 0;
 
 
   let bhk_count = [0, 1, 1, 1, 0, 0];
-  let place = "chandigarh";
+  let place = "tamil nadu";
   let url_count = 0;
+  let url_count1 = 0;
   let place1 = "";
+  let place2 = "";
+
 
   let w = place.split(" ");
 
   if (w.length > 1) {
     for (let x = 0; x < bhk_count.length; x++) {
       if (bhk_count[x] == 0) {
-        x++;
         prop_details[x] = [];
       } else if (bhk_count[x] == 1) {
         const page = await browser.newPage();
@@ -68,7 +70,6 @@ let prpcnt = 0;
             place1 = pl.join("-")
             return place1;
           })
-          console.log(place1)
 
           var page_prop = await page.evaluate(() => {
 
@@ -88,25 +89,17 @@ let prpcnt = 0;
                 var redirect_url = "does not exist"
               }
 
-
               // bhk..................................
               var bhk = document.querySelectorAll(".m-srp-card__title__bhk")[i].innerText;
               var arr_bhk = bhk.split("");
               var arr1_bhk = arr_bhk[0];
               bhk = arr1_bhk;
               bhk = Number(bhk);
-
-
               //location........................   
               var location_prop = document.querySelectorAll(".m-srp-card__title")[i].innerText;
-
-
               //price..............................
               var c = document.querySelectorAll(".m-srp-card__info")[i].children[1].firstChild.data;
-
-
               var price = [];
-
               if (c.length > 10) {
                 var res = c.split("           ");
                 var str1 = res[5].split("");
@@ -134,9 +127,6 @@ let prpcnt = 0;
               } else {
                 price = "Call for price";
               }
-
-
-
               //size................................
               var size = document.querySelectorAll(".m-srp-card__title")[i].innerText;
 
@@ -146,8 +136,6 @@ let prpcnt = 0;
               } else {
                 size = "unknown"
               }
-
-
 
               var object_property = {
 
@@ -169,8 +157,6 @@ let prpcnt = 0;
             return property_details;
 
           })
-          prop_details.push(page_prop)
-          console.log(page_prop);
           url_count++;
         } else {
           console.log("-x-x-x-x- start -x-x-x-x-x-x-")
@@ -270,11 +256,209 @@ let prpcnt = 0;
             return property_details;
 
           })
+
+        }
+
+        //////////////////////////99acers//////////////99acers//////////////////////////
+        if (url_count1 == 0) {
+          const search_string1 = "rent 99acres " + (x + 1) + " bhk " + place + " ";
+
+          console.log("-x-x-x-x- start -x-x-x-x-x-x-")
+          await page.goto("https://www.google.com/search?q=" + search_string1);
+          console.log("x-x-x-x-x- next -x-x-x-x-x")
+          await page.evaluate(() => {
+            document.querySelector('.DKV0Md').click()
+
+          })
+          // full page load wait
+          await page.waitForNavigation({
+            waitUntil: 'networkidle0',
+          });
+          place2 = await page.evaluate(() => {
+            let url = document.URL;
+            let sp = url.split("-")
+            let sp_l = sp.length
+            let sp_arr = [];
+            for (let i = 6; i < sp_l - 1; i++) {
+              sp_arr.push(sp[i])
+            }
+            let p = sp_arr.join("-")
+
+            return p;
+          })
+
+
+          var page_prop1 = await page.evaluate(() => {
+
+            var numberofblocks = document.querySelectorAll(".srp").length;
+            var property_details = [];
+
+            for (let i = 0; i < numberofblocks; i++) {
+
+              //redirect_url...................................
+              let url_code = document.querySelectorAll(".srp")[i].outerHTML.split(" ")[4].split('"')[1];
+              let redirect_url = "https://www.99acres.com/" + url_code;
+
+              // bhk..................................
+              let bhk = document.querySelectorAll(".srpTuple__spacer16 ")[(i * 3) + 2].innerText;
+              bhk = Number(bhk.split(" ")[0]);
+
+              //location........................   
+              var location_prop = document.querySelectorAll(".srpTuple__tupleTable")[i].firstElementChild.firstElementChild.innerText;
+
+              //price..............................
+              let c = document.querySelectorAll(".srpTuple__spacer16 ")[i * 3].innerText
+
+              var price = [];
+
+              if (c.length > 10) {
+                var res = c.split(" ");
+                var str1 = res[1].split("");
+                var arr = [];
+                for (var j = 0; j < str1.length; j++) {
+                  if (str1[j] !== "\t" && str1[j] !== " " && str1[j] !== "\n") {
+                    arr.push(str1[j]);
+                  }
+                }
+                var lack_check = arr[(arr.length) - 3] + arr[(arr.length) - 2] + arr[(arr.length) - 1]
+
+                if (lack_check === "Lac") {
+                  for (var j = 0; j < ((arr.length) - 3); j++) {
+                    price.push(arr[j]);
+                  }
+                  price = (Number(price.join('')) * 100000);
+                } else {
+                  for (var j = 0; j < arr.length; j++) {
+                    if (arr[j] !== ",") {
+                      price.push(arr[j]);
+                    }
+                  }
+                  price = Number(price.join(''));
+                }
+              } else {
+                price = "Call for price";
+              }
+
+              //size................................
+              let size = document.querySelectorAll(".srpTuple__spacer16 ")[(i * 3) + 1].innerText;
+              size = size.split(" ")[0] + size.split(" ")[1];
+
+
+
+              var object_property = {
+
+                "redirect_url": redirect_url,
+                "bhk": bhk,
+                "location": location_prop,
+                "price": price,
+                "size": size
+              };
+
+              //picture.....................................
+              if (document.querySelectorAll(".srpTuple__tupleDetails ")[i] && document.querySelectorAll(".srpTuple__tupleDetails ")[i].firstElementChild.firstElementChild.firstElementChild.lastElementChild.attributes[0].value) {
+                object_property.picture = document.querySelectorAll(".srpTuple__tupleDetails ")[i].firstElementChild.firstElementChild.firstElementChild.lastElementChild.attributes[0].value;
+              }
+
+              property_details.push(object_property);
+            }
+
+            return property_details;
+
+          })
+          page_prop = page_prop.concat(page_prop1);
+          prop_details.push(page_prop)
+          console.log(page_prop);
+          url_count1++;
+        } else {
+          console.log("-x-x-x-x- start -x-x-x-x-x-x-")
+          await page.goto("https://www.99acres.com/" + (x + 1) + "-bhk-residential-apartments-for-rent-in-" + (place2) + "-ffid");
+
+          var page_prop1 = await page.evaluate(() => {
+
+            var numberofblocks = document.querySelectorAll(".srp").length;
+            var property_details = [];
+
+            for (let i = 0; i < numberofblocks; i++) {
+
+              //redirect_url...................................
+              let url_code = document.querySelectorAll(".srp")[i].outerHTML.split(" ")[4].split('"')[1];
+              let redirect_url = "https://www.99acres.com/" + url_code;
+
+              // bhk..................................
+              let bhk = document.querySelectorAll(".srpTuple__spacer16 ")[(i * 3) + 2].innerText;
+              bhk = Number(bhk.split(" ")[0]);
+
+              //location........................   
+              var location_prop = document.querySelectorAll(".srpTuple__tupleTable")[i].firstElementChild.firstElementChild.innerText;
+
+              //price..............................
+              let c = document.querySelectorAll(".srpTuple__spacer16 ")[i * 3].innerText
+
+              var price = [];
+
+              if (c.length > 10) {
+                var res = c.split(" ");
+                var str1 = res[1].split("");
+                var arr = [];
+                for (var j = 0; j < str1.length; j++) {
+                  if (str1[j] !== "\t" && str1[j] !== " " && str1[j] !== "\n") {
+                    arr.push(str1[j]);
+                  }
+                }
+                var lack_check = arr[(arr.length) - 3] + arr[(arr.length) - 2] + arr[(arr.length) - 1]
+
+                if (lack_check === "Lac") {
+                  for (var j = 0; j < ((arr.length) - 3); j++) {
+                    price.push(arr[j]);
+                  }
+                  price = (Number(price.join('')) * 100000);
+                } else {
+                  for (var j = 0; j < arr.length; j++) {
+                    if (arr[j] !== ",") {
+                      price.push(arr[j]);
+                    }
+                  }
+                  price = Number(price.join(''));
+                }
+              } else {
+                price = "Call for price";
+              }
+
+              //size................................
+              let size = document.querySelectorAll(".srpTuple__spacer16 ")[(i * 3) + 1].innerText;
+              size = size.split(" ")[0] + size.split(" ")[1];
+
+
+
+              var object_property = {
+
+                "redirect_url": redirect_url,
+                "bhk": bhk,
+                "location": location_prop,
+                "price": price,
+                "size": size
+              };
+
+              //picture.....................................
+              if (document.querySelectorAll(".srpTuple__tupleDetails ")[i] && document.querySelectorAll(".srpTuple__tupleDetails ")[i].firstElementChild.firstElementChild.firstElementChild.lastElementChild.attributes[0].value) {
+                object_property.picture = document.querySelectorAll(".srpTuple__tupleDetails ")[i].firstElementChild.firstElementChild.firstElementChild.lastElementChild.attributes[0].value;
+              }
+
+              property_details.push(object_property);
+            }
+
+            return property_details;
+
+          })
+          page_prop = page_prop.concat(page_prop1);
           prop_details.push(page_prop)
           console.log(page_prop);
 
-
         }
+
+
+        //////////////////////////////////////////////////////////////////////
+
 
 
       }
@@ -284,7 +468,6 @@ let prpcnt = 0;
   } else {
     for (let x = 0; x < bhk_count.length; x++) {
       if (bhk_count[x] == 0) {
-        x++;
         prop_details[x] = [];
       } else if (bhk_count[x] == 1) {
         const page = await browser.newPage();
@@ -390,8 +573,96 @@ let prpcnt = 0;
           return property_details;
 
         })
+        console.log(page_prop);
+        // -----------------------99acers------------------------------------------------99acers--------------------------------------------------
+
+        console.log("-x-x-x-x- start -x-x-x-x-x-x-")
+        await page.goto("https://www.99acres.com/" + (x + 1) + "-bhk-flats-for-rent-in-" + place + "-ffid");
+
+        var page_prop1 = await page.evaluate(() => {
+
+          var numberofblocks = document.querySelectorAll(".srp").length;
+          var property_details = [];
+
+          for (let i = 0; i < numberofblocks; i++) {
+
+            //redirect_url...................................
+            let url_code = document.querySelectorAll(".srp")[i].outerHTML.split(" ")[4].split('"')[1];
+            let redirect_url = "https://www.99acres.com/" + url_code;
+
+            // bhk..................................
+            let bhk = document.querySelectorAll(".srpTuple__spacer16 ")[(i * 3) + 2].innerText;
+            bhk = Number(bhk.split(" ")[0]);
+
+            //location........................   
+            var location_prop = document.querySelectorAll(".srpTuple__tupleTable")[0].firstElementChild.firstElementChild.innerText;
+
+            //price..............................
+            let c = document.querySelectorAll(".srpTuple__spacer16 ")[i * 3].innerText
+
+            var price = [];
+
+            if (c.length > 10) {
+              var res = c.split(" ");
+              var str1 = res[1].split("");
+              var arr = [];
+              for (var j = 0; j < str1.length; j++) {
+                if (str1[j] !== "\t" && str1[j] !== " " && str1[j] !== "\n") {
+                  arr.push(str1[j]);
+                }
+              }
+              var lack_check = arr[(arr.length) - 3] + arr[(arr.length) - 2] + arr[(arr.length) - 1]
+
+              if (lack_check === "Lac") {
+                for (var j = 0; j < ((arr.length) - 3); j++) {
+                  price.push(arr[j]);
+                }
+                price = (Number(price.join('')) * 100000);
+              } else {
+                for (var j = 0; j < arr.length; j++) {
+                  if (arr[j] !== ",") {
+                    price.push(arr[j]);
+                  }
+                }
+                price = Number(price.join(''));
+              }
+            } else {
+              price = "Call for price";
+            }
+
+            //size................................
+            let size = document.querySelectorAll(".srpTuple__spacer16 ")[(i * 3) + 1].innerText;
+            size = size.split(" ")[0] + size.split(" ")[1];
+
+
+
+            var object_property = {
+
+              "redirect_url": redirect_url,
+              "bhk": bhk,
+              "location": location_prop,
+              "price": price,
+              "size": size
+            };
+
+            //picture.....................................
+            if (document.querySelectorAll(".srpTuple__tupleDetails ")[i] && document.querySelectorAll(".srpTuple__tupleDetails ")[i].firstElementChild.firstElementChild.firstElementChild.lastElementChild.attributes[0].value) {
+              object_property.picture = document.querySelectorAll(".srpTuple__tupleDetails ")[i].firstElementChild.firstElementChild.firstElementChild.lastElementChild.attributes[0].value;
+            }
+
+            property_details.push(object_property);
+          }
+
+          return property_details;
+
+        })
+        page_prop = page_prop.concat(page_prop1);
         prop_details.push(page_prop)
         console.log(page_prop);
+
+
+
+
 
       }
       prpcnt = prpcnt + prop_details[x].length;
@@ -418,12 +689,12 @@ let prpcnt = 0;
 
 
   // await browser.close();
-  app.get("/", (req, res) => {
-    res.send(prop_details)
-  })
+
 
 })();
-
+app.get("/", (req, res) => {
+  res.send(prop_details)
+})
 
 
 
@@ -431,109 +702,3 @@ let prpcnt = 0;
 app.listen(process.env.PORT || 3000, function () {
   console.log("server started at 3000");
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 99acres
-// https://www.99acres.com/2-bhk-flats-for-rent-in-bangalore-ffid
-
-
-
-// --------------------property_url-----------------------------
-// let p=[];
-// for(let i=0;i<document.querySelectorAll(".srp").length;i++){
-// let x=document.querySelectorAll(".srp")[i].outerHTML.split(" ")[4].split('"')[1];
-// let url_99acres="https://www.99acres.com/"+x;
-// p.push(url_99acres);
-// }
-
-
-
-// --------------------number of elements----------------------------
-// let a=document.querySelectorAll(".srpTuple__tupleDetails ").length;
-
-
-// -------------picture---------------
-// let pic_url=document.querySelectorAll(".srpTuple__tupleDetails ")[0].firstElementChild.firstElementChild.firstElementChild.lastElementChild.attributes[0].value;
-
-
-// ---------location------------
-// let location=document.querySelectorAll(".srpTuple__tupleTable")[0].firstElementChild.firstElementChild.innerText;
-
-// ---------price----------------
-// let p=[];
-// for(let i=0;i<document.querySelectorAll(".srpTuple__tupleDetails ").length;i++){
-// let c=document.querySelectorAll(".srpTuple__spacer16 ")[i*3].innerText
-
-// var price = [];
-
-//               if (c.length > 10) {
-//                 var res = c.split(" ");
-//                 var str1 = res[1].split("");
-//                 var arr = [];
-//                 for (var j = 0; j < str1.length; j++) {
-//                   if (str1[j] !== "\t" && str1[j] !== " " && str1[j] !== "\n") {
-//                     arr.push(str1[j]);
-//                   }
-//                 }
-//                 var lack_check = arr[(arr.length) - 3] + arr[(arr.length) - 2] + arr[(arr.length) - 1]
-
-//                 if (lack_check === "Lac") {
-//                   for (var j = 0; j < ((arr.length) - 3); j++) {
-//                     price.push(arr[j]);
-//                   }
-//                   price = (Number(price.join('')) * 100000);
-//                 } else {
-//                   for (var j = 0; j < arr.length; j++) {
-//                     if (arr[j] !== ",") {
-//                       price.push(arr[j]);
-//                     }
-//                   }
-//                   price = Number(price.join(''));
-//                 }
-//               } else {
-//                 price = "Call for price";
-//               }
-// p.push(price)
-// }
-
-
-
-
-
-// -------------size--------------------
-// let p=[];
-// for(let i=0;i<document.querySelectorAll(".srpTuple__tupleDetails ").length;i++){
-// let size=document.querySelectorAll(".srpTuple__spacer16 ")[(i*3)+1].innerText;
-// size=size.split(" ")[0]+size.split(" ")[1];
-// p.push(size)
-
-// }
-
-
-
-
-// ---------------bhk--------------------
-// let p=[];
-// for(let i=0;i<document.querySelectorAll(".srpTuple__tupleDetails ").length;i++){
-// let bhk=document.querySelectorAll(".srpTuple__spacer16 ")[(i*3)+2].innerText
-// bhk=Number(bhk.split(" ")[0])
-// p.push(bhk)
-// }
