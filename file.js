@@ -27,7 +27,7 @@ let prpcnt = 0;
 
 
   let bhk_count = [0, 1, 1, 1, 0, 0];
-  let place = "lucknow";
+  let place = "tamil nadu";
   let url_count = 0;
   let url_count1 = 0;
   let place1 = "";
@@ -59,7 +59,7 @@ let prpcnt = 0;
           })
           // full page load wait
           await page.waitForNavigation({
-            waitUntil: 'networkidle0',
+            waitUntil: 'networkidle2',
           });
           place1 = await page.evaluate(() => {
             let x = document.URL.split("-")
@@ -273,7 +273,7 @@ let prpcnt = 0;
           })
           // full page load wait
           await page.waitForNavigation({
-            waitUntil: 'networkidle0',
+            waitUntil: 'networkidle2',
           });
           place2 = await page.evaluate(() => {
             let url = document.URL;
@@ -321,13 +321,10 @@ let prpcnt = 0;
                     arr.push(str1[j]);
                   }
                 }
-                var lack_check = arr[(arr.length) - 3] + arr[(arr.length) - 2] + arr[(arr.length) - 1]
+                var lack_check = res[2];
 
                 if (lack_check === "Lac") {
-                  for (var j = 0; j < ((arr.length) - 3); j++) {
-                    price.push(arr[j]);
-                  }
-                  price = (Number(price.join('')) * 100000);
+                  price = (Number(res[1]) * 100000);
                 } else {
                   for (var j = 0; j < arr.length; j++) {
                     if (arr[j] !== ",") {
@@ -406,13 +403,10 @@ let prpcnt = 0;
                     arr.push(str1[j]);
                   }
                 }
-                var lack_check = arr[(arr.length) - 3] + arr[(arr.length) - 2] + arr[(arr.length) - 1]
+                var lack_check = res[2];
 
                 if (lack_check === "Lac") {
-                  for (var j = 0; j < ((arr.length) - 3); j++) {
-                    price.push(arr[j]);
-                  }
-                  price = (Number(price.join('')) * 100000);
+                  price = (Number(res[1]) * 100000);
                 } else {
                   for (var j = 0; j < arr.length; j++) {
                     if (arr[j] !== ",") {
@@ -612,13 +606,10 @@ let prpcnt = 0;
                   arr.push(str1[j]);
                 }
               }
-              var lack_check = arr[(arr.length) - 3] + arr[(arr.length) - 2] + arr[(arr.length) - 1]
+              var lack_check = res[2];
 
               if (lack_check === "Lac") {
-                for (var j = 0; j < ((arr.length) - 3); j++) {
-                  price.push(arr[j]);
-                }
-                price = (Number(price.join('')) * 100000);
+                price = (Number(res[1]) * 100000);
               } else {
                 for (var j = 0; j < arr.length; j++) {
                   if (arr[j] !== ",") {
@@ -689,7 +680,7 @@ let prpcnt = 0;
   }
 
 
-  await browser.close();
+  // await browser.close();
   for (let i = 0; i < 6; i++) {
     let l = prop_details[i].length;
     if (l != 0) {
