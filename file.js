@@ -6,6 +6,7 @@ var app = express();
 
 const puppeteer = require('puppeteer');
 let prop_details = [];
+let properties_all = [];
 let prpcnt = 0;
 
 (async () => {
@@ -26,7 +27,7 @@ let prpcnt = 0;
 
 
   let bhk_count = [0, 1, 1, 1, 0, 0];
-  let place = "tamil nadu";
+  let place = "lucknow";
   let url_count = 0;
   let url_count1 = 0;
   let place1 = "";
@@ -688,12 +689,23 @@ let prpcnt = 0;
   }
 
 
-  // await browser.close();
-
-
+  await browser.close();
+  for (let i = 0; i < 6; i++) {
+    let l = prop_details[i].length;
+    if (l != 0) {
+      for (let j = 0; j < l; j++) {
+        properties_all.push(prop_details[i][j])
+      }
+    }
+  }
 })();
+
+
+
+
+
 app.get("/", (req, res) => {
-  res.send(prop_details)
+  res.send(properties_all)
 })
 
 
