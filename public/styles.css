@@ -1,0 +1,59 @@
+h1{
+  text-align: center;
+  text-shadow: 2px 2px #a6e3e9;
+  color: #00adb5;
+  padding-top: 6%;
+  font-size: 40px;
+  font-family: sans-serif;
+  letter-spacing: 3px;
+
+}
+body{
+
+  background-color: #000000;
+}
+.topnav {
+padding-top: 6%;
+  overflow: hidden;
+}
+
+.topnav a {
+  position: relative;
+  left: 55.5%;
+  padding-left: 100px;
+  padding-top: 20%;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 20px 16px;
+  text-decoration: none;
+  font-size: 21px;
+  letter-spacing: 3px;
+  font-family: sans-serif;
+ font-weight: bold;
+}
+
+.topnav a:hover {
+  background-color:#000000;
+   transition: all 0.5s;
+  color: white;
+}
+
+.topnav a.active {
+
+  color: white;}
+.content{
+  text-align: center;
+  padding-top: 4%;
+  font-size: 25px;
+  color: white;
+  font-family: sans-serif;
+
+}
+.background{
+  position: absolute;
+    z-index: -1;
+    bottom:0vh;
+    width:100vw;
+    left: -10px
+
+}
