@@ -13,7 +13,7 @@ const puppeteer = require('puppeteer')
 //     });
 
 
-//     await browser.close();
+//     await browser.close(); 
 // })();
 
 // let bhk_count = [1, 1, 1, 1, 1, 1]
