@@ -158,7 +158,7 @@ for (let x = 0; x < bhk_count.length; x++) {
             // 99acers-----------------------------------------------------------------
             async function f2() {
                 const browser = await puppeteer.launch({
-                    headless: false,
+                    headless: true,
                     args: ['--start-maximized']
                 });
                 const page = await browser.newPage();
@@ -270,7 +270,7 @@ for (let x = 0; x < bhk_count.length; x++) {
             //housing.com----------------------------------------------------------------
             async function f3() {
                 const browser = await puppeteer.launch({
-                    headless: false,
+                    headless: true,
                     args: ['--start-maximized']
                 });
                 const page = await browser.newPage();
