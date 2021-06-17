@@ -1,4 +1,5 @@
-# rent_backend
+# rentit_backend
+
 clone the repository and then navigate in the folder\
 Follow the commands written below-\
 `npm i`\
