@@ -419,9 +419,9 @@ for (let x = 0; x < bhk_count.length; x++) {
 
                                     //location........................   
 
-                                    // if (document.querySelectorAll(".results-wrapper")[0].childNodes[i] && document.querySelectorAll(".results-wrapper")[0].childNodes[i].childNodes[0].childNodes[1].childNodes[0].childNodes[3].childNodes[0].innerText) {
-                                    //     object_property.location = document.querySelectorAll(".results-wrapper")[0].childNodes[i].childNodes[0].childNodes[1].childNodes[0].childNodes[3].childNodes[0].innerText
-                                    // }
+                                    if (document.querySelectorAll(".results-wrapper")[0].childNodes[i] && document.querySelectorAll(".results-wrapper")[0].childNodes[i].childNodes[0].childNodes[1].childNodes[0].childNodes[3].childNodes[0]) {
+                                        object_property.location = document.querySelectorAll(".results-wrapper")[0].childNodes[i].childNodes[0].childNodes[1].childNodes[0].childNodes[3].childNodes[0].innerText
+                                    }
 
                                     //picture.....................................
                                     if (document.querySelectorAll(".results-wrapper")[0].childNodes[i] && document.querySelectorAll(".results-wrapper")[0].childNodes[i].childNodes[0].childNodes[0].childNodes[0].currentSrc) {
@@ -461,7 +461,7 @@ for (let x = 0; x < bhk_count.length; x++) {
             all_prop.push(res3)
             merged = [].concat.apply([], all_prop);
 
-            console.log(merged)
+            // console.log(merged)
         }
         big();
 
